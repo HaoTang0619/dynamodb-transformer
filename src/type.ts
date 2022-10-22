@@ -20,7 +20,7 @@ export type Unmarshalled =
   | boolean // BOOL
   | BSet // BS
   | Unmarshalled[] // L
-  | { [key: string]: Unmarshalled } // M
+  | { [name: string]: Unmarshalled } // M
   | number // N
   | NSet // NS
   | null // NULL
@@ -32,7 +32,7 @@ export type Marshalled = ExactlyOne<{
   BOOL: boolean;
   BS: Uint8Array[];
   L: Marshalled[];
-  M: { [key: string]: Marshalled };
+  M: { [name: string]: Marshalled };
   N: string;
   NS: string[];
   NULL: true;

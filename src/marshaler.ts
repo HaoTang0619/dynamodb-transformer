@@ -52,10 +52,10 @@ const marshalerOfEach = (value: Unmarshalled): Marshalled => {
 };
 
 const marshaler = (data: {
-  [key: string]: Unmarshalled;
-}): { [key: string]: Marshalled } => {
+  [name: string]: Unmarshalled;
+}): { [name: string]: Marshalled } => {
   return Object.entries(data).reduce(
-    (acc, [key, value]) => ({ ...acc, [key]: marshalerOfEach(value) }),
+    (acc, [name, value]) => ({ ...acc, [name]: marshalerOfEach(value) }),
     {},
   );
 };

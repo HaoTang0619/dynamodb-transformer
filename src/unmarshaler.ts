@@ -50,9 +50,9 @@ const unmarshalerOfEach = (value: Marshalled): Unmarshalled => {
   return new SSet(value.SS);
 };
 
-const unmarshaler = (data: { [key: string]: Marshalled }): Unmarshalled => {
+const unmarshaler = (data: { [name: string]: Marshalled }): Unmarshalled => {
   return Object.entries(data).reduce(
-    (acc, [key, value]) => ({ ...acc, [key]: unmarshalerOfEach(value) }),
+    (acc, [name, value]) => ({ ...acc, [name]: unmarshalerOfEach(value) }),
     {},
   );
 };

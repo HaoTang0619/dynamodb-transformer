@@ -2,17 +2,23 @@
   "name": "dynamodb-transformer",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/main/index.js",
+  "types": "lib/main/index.d.ts",
+  "module": "lib/module/index.js",
   "author": "Howard Tang <t919901@gmail.com>",
   "keywords": [],
   "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
   "files": [
-    "lib/**/*"
+    "lib/main",
+    "lib/module"
   ],
   "scripts": {
-    "prebuild": "rimraf lib",
-    "build": "tsc --build tsconfig.build.json",
+    "build": "run-p build:*",
+    "build:main": "tsc --build tsconfig.build.json",
+    "build:module": "tsc --build tsconfig.module.json",
     "format": "prettier --write \"src/**/*.{ts*,js*}\"",
     "lint": "yarn format && eslint \"src/**/*.{ts*,js*}\" --fix",
     "test": "jest --passWithNoTests",
@@ -32,6 +38,7 @@
     "eslint-plugin-no-console-log": "^2.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29.2.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",

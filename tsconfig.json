@@ -6,13 +6,13 @@
     "allowSyntheticDefaultImports": true,
     "target": "ES2019",
     "sourceMap": true,
-    "outDir": "./lib",
-    "baseUrl": "./",
+    "outDir": "./lib/main",
+    "rootDir": "src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src"],
+  "include": ["src", "usage"],
 }

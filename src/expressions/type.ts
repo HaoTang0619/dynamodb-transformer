@@ -69,3 +69,33 @@ export type OperateParams =
   | ['contains', Uint8Array | boolean | number | null | string];
 
 export type OperateResult = (expressions: Expressions, name: string) => string;
+
+type PlainValues =
+  | Uint8Array
+  | boolean
+  | number
+  | null
+  | string
+  | OperateResult;
+
+export const SYMBOL_AND: unique symbol = Symbol.for('AND');
+export const SYMBOL_OR: unique symbol = Symbol.for('OR');
+export const SYMBOL_NOT: unique symbol = Symbol.for('NOT');
+
+export type PlainData =
+  | { [name: string]: PlainValues }
+  | [typeof SYMBOL_AND, NonEmptyArr<PlainData>]
+  | [typeof SYMBOL_OR, NonEmptyArr<PlainData>]
+  | [typeof SYMBOL_NOT, PlainData];
+
+export type LogicalParams =
+  | ['and' | 'or', NonEmptyArr<PlainData>]
+  | ['not', PlainData];
+
+export type DataSetToExpressionsParams = {
+  condition?: PlainData;
+  extraReservedWords?: string[];
+  filter?: PlainData;
+  keyCondition?: PlainData;
+  update?: PlainData;
+};

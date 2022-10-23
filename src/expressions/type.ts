@@ -16,7 +16,7 @@ export type AddAttrParams =
   | [Expressions, string]
   | [Expressions, Uint8Array | boolean | number | null | string, 'value'];
 
-type NonEmptyArr<T> = [T, ...T[]];
+export type NonEmptyArr<T> = [T, ...T[]];
 
 // [expressions, operator, name, value]
 export type OperateFuncParams =

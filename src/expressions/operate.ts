@@ -3,6 +3,7 @@ import RESERVED_WORDS from './reserved_words';
 import {
   AddAttrParams,
   Expressions,
+  NonEmptyArr,
   OperateFuncParams,
   OperateParams,
   OperateResult,
@@ -122,3 +123,28 @@ const operate = (...params: OperateParams): OperateResult => {
 };
 
 export default operate;
+export const EQ = (value: Uint8Array | boolean | number | null | string) =>
+  operate('=', value);
+export const NE = (value: Uint8Array | boolean | number | null | string) =>
+  operate('<>', value);
+export const LE = (value: Uint8Array | number | string) => operate('<=', value);
+export const LT = (value: Uint8Array | number | string) => operate('<', value);
+export const GE = (value: Uint8Array | number | string) => operate('>=', value);
+export const GT = (value: Uint8Array | number | string) => operate('>', value);
+export const BETWEEN = (
+  value: [Uint8Array, Uint8Array] | [number, number] | [string, string],
+) => operate('between', value);
+export const IN = (
+  value: NonEmptyArr<Uint8Array | boolean | number | null | string>,
+) => operate('in', value);
+export const ATTRIBUTE_EXISTS = () => operate('attribute_exists');
+export const ATTRIBUTE_NOT_EXISTS = () => operate('attribute_not_exists');
+export const ATTRIBUTE_TYPE = (
+  value: 'B' | 'BOOL' | 'BS' | 'L' | 'M' | 'N' | 'NS' | 'NULL' | 'S' | 'SS',
+) => operate('attribute_type', value);
+export const BEGINS_WITH = (value: Uint8Array | string) =>
+  operate('begins_with', value);
+export const CONTAINS = (
+  value: Uint8Array | boolean | number | null | string,
+) => operate('contains', value);
+export const SIZE = () => operate('size');

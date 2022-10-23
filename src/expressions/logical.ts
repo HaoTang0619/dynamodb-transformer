@@ -1,5 +1,6 @@
 import {
   LogicalParams,
+  NonEmptyArr,
   PlainData,
   SYMBOL_AND,
   SYMBOL_NOT,
@@ -15,3 +16,6 @@ const logical = (...params: LogicalParams): PlainData => {
 };
 
 export default logical;
+export const AND = (data: NonEmptyArr<PlainData>) => logical('and', data);
+export const OR = (data: NonEmptyArr<PlainData>) => logical('or', data);
+export const NOT = (data: PlainData) => logical('not', data);

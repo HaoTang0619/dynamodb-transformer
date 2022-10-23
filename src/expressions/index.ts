@@ -1,16 +1,21 @@
 import operate from './operate';
-import { DataSetToExpressionsParams, Expressions, PlainData } from './type';
+import {
+  DataSetToExpressionsParams,
+  Expressions,
+  NonEmptyArr,
+  PlainData,
+} from './type';
 
 const getExpressions = (expressions: Expressions, data: PlainData): string => {
   if (Array.isArray(data)) {
     if (data[0].description === 'AND') {
-      return (data[1] as any)
-        .map((d: PlainData) => `(${getExpressions(expressions, d)})`)
+      return (data[1] as NonEmptyArr<PlainData>)
+        .map((d) => `(${getExpressions(expressions, d)})`)
         .join(' AND ');
     }
     if (data[0].description === 'OR') {
-      return (data[1] as any)
-        .map((d: PlainData) => `(${getExpressions(expressions, d)})`)
+      return (data[1] as NonEmptyArr<PlainData>)
+        .map((d) => `(${getExpressions(expressions, d)})`)
         .join(' OR ');
     }
     return `NOT (${getExpressions(expressions, data[1] as PlainData)})`;

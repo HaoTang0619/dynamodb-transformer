@@ -1,0 +1,6 @@
+{
+  "license": "UNLICENSED",
+  "dependencies": {
+    "dynamodb-transformer": "file:.yalc/dynamodb-transformer"
+  }
+}

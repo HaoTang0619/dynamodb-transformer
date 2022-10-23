@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "dynamodb-transformer": {
+      "signature": "3bf3fb7ee962864852737c44eb065af5",
+      "file": true
+    }
+  }
+}

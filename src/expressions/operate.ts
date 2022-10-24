@@ -32,27 +32,40 @@ const addAttr = (...params: AddAttrParams): string => {
 
 const addNameAttrOfEach = (
   expressions: Expressions,
-  nameSegment: string,
-  reservedWords: string[],
+  name: string,
+  word: string,
 ): string => {
-  if (reservedWords.length === 0) return nameSegment;
+  if (!word) return name;
 
-  const newNameSegments = nameSegment
-    .split(reservedWords[0])
-    .map((seg) => addNameAttrOfEach(expressions, seg, reservedWords.slice(1)));
+  let newName = name;
+  let nameAttr: string;
 
-  if (newNameSegments.length > 1) {
-    const nameAttr = addAttr(expressions, reservedWords[0]);
-    return newNameSegments.join(nameAttr);
+  const nameSegment = name.split(word);
+  if (nameSegment.length > 1) {
+    newName = nameSegment.reduce((acc, cur, idx) => {
+      if (idx === 0) return cur;
+      const prev = nameSegment[idx - 1];
+      if (
+        /^$|\.$/.test(prev) &&
+        /^$|^\.|^\[0\]|^\[[1-9]\d*\]/.test(cur) // Array syntax regex: /(\[0\]|\[[1-9]\d*\])/
+      ) {
+        nameAttr = nameAttr || addAttr(expressions, word);
+        return `${acc}${nameAttr}${cur}`;
+      }
+      return `${acc}${word}${cur}`;
+    }, '');
   }
 
-  return newNameSegments.join('');
+  return newName;
 };
 
 const addNameAttr = (expressions: Expressions, name: string): string => {
   // Step 1 ~ replace "extraReservedWords":
   const { extraReservedWords = [] } = expressions;
-  let newName = addNameAttrOfEach(expressions, name, extraReservedWords);
+  let newName = name;
+  extraReservedWords.forEach((word) => {
+    newName = addNameAttrOfEach(expressions, newName, word);
+  });
 
   // Step 2 ~ split by ".":
   newName = newName

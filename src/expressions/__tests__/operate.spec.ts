@@ -52,22 +52,34 @@ test('operate_in', () => {
 test('operate_func_1', () => {
   const func1Test = operate('attribute_exists');
   expect(func1Test(expressions, 'nested.test.random.one[1]')).toBe(
-    'attribute_exists(#n_8.#n_7[1])',
+    'attribute_exists(#n_7.#n_8[1])',
   );
   expect(expressions.counter).toBe(9);
-  expect(expressions.ExpressionAttributeNames?.['#n_7']).toBe('random.one');
-  expect(expressions.ExpressionAttributeNames?.['#n_8']).toBe('nested.test');
+  expect(expressions.ExpressionAttributeNames?.['#n_7']).toBe('nested.test');
+  expect(expressions.ExpressionAttributeNames?.['#n_8']).toBe('random.one');
 });
 
 test('operate_func_2', () => {
   const func2Test = operate('attribute_type', 'B');
   expect(func2Test(expressions, 'nested.test[2].random.one')).toBe(
-    'attribute_type(#n_10[2].#n_9, :v_11)',
+    'attribute_type(#n_9[2].#n_10, :v_11)',
   );
   expect(expressions.counter).toBe(12);
-  expect(expressions.ExpressionAttributeNames?.['#n_9']).toBe('random.one');
-  expect(expressions.ExpressionAttributeNames?.['#n_10']).toBe('nested.test');
+  expect(expressions.ExpressionAttributeNames?.['#n_9']).toBe('nested.test');
+  expect(expressions.ExpressionAttributeNames?.['#n_10']).toBe('random.one');
   expect(expressions.ExpressionAttributeValues?.[':v_11']).toStrictEqual({
     S: 'B',
+  });
+});
+
+test('operate_func_3', () => {
+  const func3Test = operate('begins_with', 'www');
+  expect(func3Test(expressions, 'nested.testy.random.one[1].arandom.one')).toBe(
+    'begins_with(nested.testy.#n_12[1].arandom.one, :v_13)',
+  );
+  expect(expressions.counter).toBe(14);
+  expect(expressions.ExpressionAttributeNames?.['#n_12']).toBe('random.one');
+  expect(expressions.ExpressionAttributeValues?.[':v_13']).toStrictEqual({
+    S: 'www',
   });
 });

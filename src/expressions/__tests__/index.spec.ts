@@ -1,7 +1,7 @@
 import dataSetToExpressions from '../index';
 import { AND, OR } from '../logical';
 import { ATTRIBUTE_EXISTS, NE } from '../operate';
-import { ADD } from '../update';
+import { ADD, PATH } from '../update';
 
 test('dataSet1', () => {
   const result = dataSetToExpressions({
@@ -9,7 +9,7 @@ test('dataSet1', () => {
       { abc: '123', def: 0 },
       AND([{ abc: NE(null) }, { name: ATTRIBUTE_EXISTS() }]),
     ]),
-    update: { 'name.child[2]': ADD(1) },
+    update: { 'name.child[2]': ADD(1), balance: PATH('frozen') },
   });
 
   expect(result).toStrictEqual({
@@ -22,6 +22,6 @@ test('dataSet1', () => {
     },
     ConditionExpression:
       '(abc = :v_0 AND def = :v_1) OR ((abc <> :v_2) AND (attribute_exists(#n_3)))',
-    UpdateExpression: 'ADD #n_4.child[2] :v_5',
+    UpdateExpression: 'ADD #n_4.child[2] :v_5 SET balance = frozen',
   });
 });

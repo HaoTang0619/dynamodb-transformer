@@ -10,7 +10,11 @@ export { default as operate } from './expressions/operate';
 export * from './expressions/operate';
 export { OperateParams, OperateResult } from './expressions/operate.type';
 export { default as update } from './expressions/update';
-export { UpdateParams, UpdateResult } from './expressions/update.type';
+export {
+  SetParams,
+  UpdateParams,
+  UpdateResult,
+} from './expressions/update.type';
 export * from './expressions/update';
 export {
   PlainValues,

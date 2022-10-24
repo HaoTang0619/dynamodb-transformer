@@ -1,6 +1,6 @@
-import { Marshalled, Unmarshalled } from '../type';
+import { Marshalled } from '../type';
 import { OperateResult } from './operate.type';
-import { UpdateResult } from './update.type';
+import { SetParams, UpdateResult } from './update.type';
 
 export type Expressions = {
   ConditionExpression?: string;
@@ -37,7 +37,7 @@ export type PlainData =
 
 export type PlainDataArr = NonEmptyArr<PlainData>;
 
-type UpdateValues = Unmarshalled | UpdateResult;
+type UpdateValues = SetParams | UpdateResult;
 
 export type UpdateData = {
   [name: string]: UpdateValues;

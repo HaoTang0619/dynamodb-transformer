@@ -6,6 +6,7 @@ import {
   Expressions,
   PlainData,
   PlainDataArr,
+  PlainValues,
   UpdateData,
 } from './type';
 import update from './update';
@@ -29,10 +30,7 @@ const getExpressions = (expressions: Expressions, data: PlainData): string => {
   const expressionStrings = Object.entries(data).map(([name, op]) => {
     let opFunc = op;
     if (typeof opFunc !== 'function') {
-      opFunc = operate(
-        '=',
-        op as Uint8Array | boolean | number | null | string,
-      );
+      opFunc = operate('=', op as PlainValues);
     }
 
     return opFunc(expressions, name);

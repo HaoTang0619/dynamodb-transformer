@@ -3,7 +3,7 @@ import {
   OperateParams,
   OperateResult,
 } from './operate.type';
-import { Expressions, NonEmptyArr } from './type';
+import { Expressions, PlainValues, PlainValuesArr } from './type';
 import { addAttr, addNameAttr } from './utils';
 
 const operateFunc = (...params: OperateFuncParams): string => {
@@ -14,9 +14,8 @@ const operateFunc = (...params: OperateFuncParams): string => {
   let valueAttr: string | string[] = '';
   if (value !== undefined) {
     if (Array.isArray(value)) {
-      valueAttr = value.map(
-        (val: Uint8Array | boolean | number | null | string) =>
-          addAttr(expressions, val, 'value'),
+      valueAttr = value.map((val: PlainValues) =>
+        addAttr(expressions, val, 'value'),
       );
     } else valueAttr = addAttr(expressions, value, 'value');
   }
@@ -53,10 +52,8 @@ const operate = (...params: OperateParams): OperateResult => {
 };
 
 export default operate;
-export const EQ = (value: Uint8Array | boolean | number | null | string) =>
-  operate('=', value);
-export const NE = (value: Uint8Array | boolean | number | null | string) =>
-  operate('<>', value);
+export const EQ = (value: PlainValues) => operate('=', value);
+export const NE = (value: PlainValues) => operate('<>', value);
 export const LE = (value: Uint8Array | number | string) => operate('<=', value);
 export const LT = (value: Uint8Array | number | string) => operate('<', value);
 export const GE = (value: Uint8Array | number | string) => operate('>=', value);
@@ -64,9 +61,7 @@ export const GT = (value: Uint8Array | number | string) => operate('>', value);
 export const BETWEEN = (
   value: [Uint8Array, Uint8Array] | [number, number] | [string, string],
 ) => operate('between', value);
-export const IN = (
-  value: NonEmptyArr<Uint8Array | boolean | number | null | string>,
-) => operate('in', value);
+export const IN = (value: PlainValuesArr) => operate('in', value);
 export const ATTRIBUTE_EXISTS = () => operate('attribute_exists');
 export const ATTRIBUTE_NOT_EXISTS = () => operate('attribute_not_exists');
 export const ATTRIBUTE_TYPE = (
@@ -74,7 +69,5 @@ export const ATTRIBUTE_TYPE = (
 ) => operate('attribute_type', value);
 export const BEGINS_WITH = (value: Uint8Array | string) =>
   operate('begins_with', value);
-export const CONTAINS = (
-  value: Uint8Array | boolean | number | null | string,
-) => operate('contains', value);
+export const CONTAINS = (value: PlainValues) => operate('contains', value);
 export const SIZE = () => operate('size');

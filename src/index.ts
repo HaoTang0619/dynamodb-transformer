@@ -13,6 +13,8 @@ export { default as update } from './expressions/update';
 export { UpdateParams, UpdateResult } from './expressions/update.type';
 export * from './expressions/update';
 export {
+  PlainValues,
+  PlainValuesArr,
   PlainData,
   PlainDataArr,
   UpdateData,

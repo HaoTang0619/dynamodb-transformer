@@ -20,22 +20,17 @@ export type Expressions = {
   UpdateExpression?: string;
 };
 
-export type NonEmptyArr<T> = [T, ...T[]];
+type NonEmptyArr<T> = [T, ...T[]];
 
-type PlainValues =
-  | Uint8Array
-  | boolean
-  | number
-  | null
-  | string
-  | OperateResult;
+export type PlainValues = Uint8Array | boolean | number | null | string;
+export type PlainValuesArr = NonEmptyArr<PlainValues>;
 
 export const SYMBOL_AND: unique symbol = Symbol.for('AND');
 export const SYMBOL_OR: unique symbol = Symbol.for('OR');
 export const SYMBOL_NOT: unique symbol = Symbol.for('NOT');
 
 export type PlainData =
-  | { [name: string]: PlainValues }
+  | { [name: string]: PlainValues | OperateResult }
   | [typeof SYMBOL_AND, PlainDataArr]
   | [typeof SYMBOL_OR, PlainDataArr]
   | [typeof SYMBOL_NOT, PlainData];

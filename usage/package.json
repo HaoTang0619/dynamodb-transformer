@@ -1,6 +1,12 @@
 {
   "license": "UNLICENSED",
+  "scripts": {
+    "use": "ts-node index.ts"
+  },
   "dependencies": {
     "dynamodb-transformer": "file:.yalc/dynamodb-transformer"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
   }
 }

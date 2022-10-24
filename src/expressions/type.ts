@@ -1,4 +1,6 @@
-import { BSet, Marshalled, NSet, SSet, Unmarshalled } from '../type';
+import { Marshalled, Unmarshalled } from '../type';
+import { OperateResult } from './operate.type';
+import { UpdateResult } from './update.type';
 
 export type Expressions = {
   ConditionExpression?: string;
@@ -9,88 +11,16 @@ export type Expressions = {
   FilterExpression?: string;
   KeyConditionExpression?: string;
   ProjectionExpression?: string;
-  UpdateExpression?: string;
   updated?: {
     set?: string[];
     remove?: string[];
     add?: string[];
     delete?: string[];
   }; // Would be omitted when returned.
+  UpdateExpression?: string;
 };
 
-export type AddAttrParams =
-  | [Expressions, string]
-  | [Expressions, Unmarshalled, 'value'];
-
 export type NonEmptyArr<T> = [T, ...T[]];
-
-// [expressions, operator, name, value]
-export type OperateFuncParams =
-  | [
-      Expressions,
-      '=' | '<>' | '<' | '<=' | '>' | '>=',
-      string,
-      Uint8Array | number | string,
-    ]
-  | [Expressions, '=' | '<>', string, boolean | null]
-  | [
-      Expressions,
-      'between',
-      string,
-      [Uint8Array, Uint8Array] | [number, number] | [string, string],
-    ]
-  | [
-      Expressions,
-      'in',
-      string,
-      NonEmptyArr<Uint8Array | boolean | number | null | string>,
-    ]
-  | [Expressions, 'attribute_exists' | 'attribute_not_exists' | 'size', string]
-  | [
-      Expressions,
-      'attribute_type',
-      string,
-      'B' | 'BOOL' | 'BS' | 'L' | 'M' | 'N' | 'NS' | 'NULL' | 'S' | 'SS',
-    ]
-  | [Expressions, 'begins_with', string, Uint8Array | string]
-  | [
-      Expressions,
-      'contains',
-      string,
-      Uint8Array | boolean | number | null | string,
-    ];
-
-// [operator, value]
-export type OperateParams =
-  | ['=' | '<>' | '<' | '<=' | '>' | '>=', Uint8Array | number | string]
-  | ['=' | '<>', boolean | null]
-  | ['between', [Uint8Array, Uint8Array] | [number, number] | [string, string]]
-  | ['in', NonEmptyArr<Uint8Array | boolean | number | null | string>]
-  | ['attribute_exists' | 'attribute_not_exists' | 'size']
-  | [
-      'attribute_type',
-      'B' | 'BOOL' | 'BS' | 'L' | 'M' | 'N' | 'NS' | 'NULL' | 'S' | 'SS',
-    ]
-  | ['begins_with', Uint8Array | string]
-  | ['contains', Uint8Array | boolean | number | null | string];
-
-export type OperateResult = (expressions: Expressions, name: string) => string;
-
-// [expressions, updater, name, value]
-export type UpdateFuncParams =
-  | [Expressions, 'set', string, Unmarshalled]
-  | [Expressions, 'remove', string]
-  | [Expressions, 'add', string, number | BSet | NSet | SSet]
-  | [Expressions, 'delete', string, BSet | NSet | SSet];
-
-// [updater, value]
-export type UpdateParams =
-  | ['set', Unmarshalled]
-  | ['remove']
-  | ['add', number | BSet | NSet | SSet]
-  | ['delete', BSet | NSet | SSet];
-
-export type UpdateResult = (expressions: Expressions, name: string) => void;
 
 type PlainValues =
   | Uint8Array
@@ -109,10 +39,6 @@ export type PlainData =
   | [typeof SYMBOL_AND, NonEmptyArr<PlainData>]
   | [typeof SYMBOL_OR, NonEmptyArr<PlainData>]
   | [typeof SYMBOL_NOT, PlainData];
-
-export type LogicalParams =
-  | ['and' | 'or', NonEmptyArr<PlainData>]
-  | ['not', PlainData];
 
 type UpdateValues = Unmarshalled | UpdateResult;
 

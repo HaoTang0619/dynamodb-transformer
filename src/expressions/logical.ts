@@ -1,5 +1,5 @@
+import { LogicalParams } from './logical.type';
 import {
-  LogicalParams,
   NonEmptyArr,
   PlainData,
   SYMBOL_AND,

@@ -1,6 +1,7 @@
 import marshaler from '../marshaler';
 import RESERVED_WORDS from './reserved_words';
-import { AddAttrParams, Expressions } from './type';
+import { Expressions } from './type';
+import { AddAttrParams } from './utils.type';
 
 export const addAttr = (...params: AddAttrParams): string => {
   const [expressions, nameVal, type = 'name'] = params;

@@ -1,10 +1,9 @@
 import {
-  Expressions,
-  NonEmptyArr,
   OperateFuncParams,
   OperateParams,
   OperateResult,
-} from './type';
+} from './operate.type';
+import { Expressions, NonEmptyArr } from './type';
 import { addAttr, addNameAttr } from './utils';
 
 const operateFunc = (...params: OperateFuncParams): string => {

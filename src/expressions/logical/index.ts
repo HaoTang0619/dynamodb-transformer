@@ -19,3 +19,5 @@ export default logical;
 export const AND = (data: PlainDataArr) => logical('and', data);
 export const OR = (data: PlainDataArr) => logical('or', data);
 export const NOT = (data: PlainData) => logical('not', data);
+
+export * from './type';

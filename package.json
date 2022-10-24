@@ -10,9 +10,21 @@
       "import": "./lib/module/index.js",
       "require": "./lib/main/index.js"
     },
+    "./expressions": {
+      "import": "./lib/module/expressions/index.js",
+      "require": "./lib/main/expressions/index.js"
+    },
     "./logical": {
-      "import": "./lib/module/expressions/logical.js",
-      "require": "./lib/main/index.js"
+      "import": "./lib/module/expressions/logical/index.js",
+      "require": "./lib/main/expressions/logical/index.js"
+    },
+    "./operate": {
+      "import": "./lib/module/expressions/operate/index.js",
+      "require": "./lib/main/expressions/operate/index.js"
+    },
+    "./update": {
+      "import": "./lib/module/expressions/update/index.js",
+      "require": "./lib/main/expressions/update/index.js"
     }
   },
   "author": "Howard Tang <t919901@gmail.com>",
@@ -26,6 +38,7 @@
     "lib/module"
   ],
   "scripts": {
+    "prebuild": "rimraf lib",
     "build": "run-p build:*",
     "build:main": "tsc --build tsconfig.build.json",
     "build:module": "tsc --build tsconfig.module.json",

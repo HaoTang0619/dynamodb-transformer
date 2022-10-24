@@ -67,3 +67,5 @@ export const BEGINS_WITH = (value: Uint8Array | string) =>
   operate('begins_with', value);
 export const CONTAINS = (value: PlainValues) => operate('contains', value);
 export const SIZE = () => operate('size');
+
+export { OperateParams, OperateResult } from './type';

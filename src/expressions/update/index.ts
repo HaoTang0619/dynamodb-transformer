@@ -91,3 +91,5 @@ export const SET = (value: SetParams) => update('set', value);
 export const REMOVE = () => update('remove');
 export const ADD = (value: number | BSet | NSet | SSet) => update('add', value);
 export const DELETE = (value: BSet | NSet | SSet) => update('delete', value);
+
+export { SetParams, UpdateParams, UpdateResult } from './type';

@@ -1,10 +1,13 @@
+import { Unmarshalled } from '../type';
 import operate, { addNameAttr } from './operate';
 import {
   DataSetToExpressionsParams,
   Expressions,
   NonEmptyArr,
   PlainData,
+  UpdateData,
 } from './type';
+import update from './update';
 
 const getExpressions = (expressions: Expressions, data: PlainData): string => {
   if (Array.isArray(data)) {
@@ -36,9 +39,30 @@ const getExpressions = (expressions: Expressions, data: PlainData): string => {
   return expressionStrings.join(' AND ');
 };
 
+const getUpdateExpression = (
+  expressions: Expressions,
+  data: UpdateData,
+): string => {
+  Object.entries(data).map(([name, up]) => {
+    let upFunc = up;
+    if (typeof upFunc !== 'function') {
+      upFunc = update('set', up as Unmarshalled);
+    }
+
+    upFunc(expressions, name);
+  });
+
+  return Object.entries(expressions.updated || {})
+    .map(
+      ([updater, strArr]) =>
+        `${updater.toLocaleUpperCase()} ${strArr.join(', ')}`,
+    )
+    .join(' ');
+};
+
 const dataSetToExpressions = (
   dataSet: DataSetToExpressionsParams,
-): Omit<Expressions, 'counter' | 'extraReservedWords'> => {
+): Omit<Expressions, 'counter' | 'extraReservedWords' | 'updated'> => {
   const { extraReservedWords = [] } = dataSet;
 
   const expressions: Expressions = {
@@ -46,6 +70,7 @@ const dataSetToExpressions = (
     ExpressionAttributeNames: {},
     ExpressionAttributeValues: {},
     extraReservedWords,
+    updated: {},
   };
 
   if (!!dataSet.condition) {
@@ -73,11 +98,15 @@ const dataSetToExpressions = (
   }
 
   if (!!dataSet.update) {
-    expressions.UpdateExpression = getExpressions(expressions, dataSet.update);
+    expressions.UpdateExpression = getUpdateExpression(
+      expressions,
+      dataSet.update,
+    );
   }
 
   delete expressions.counter;
   delete expressions.extraReservedWords;
+  delete expressions.updated;
   Object.keys(expressions).forEach((exp) => {
     if (!expressions[exp] || Object.keys(expressions[exp])?.length === 0) {
       delete expressions[exp];

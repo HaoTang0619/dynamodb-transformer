@@ -9,7 +9,7 @@ import {
   OperateResult,
 } from './type';
 
-const addAttr = (...params: AddAttrParams): string => {
+export const addAttr = (...params: AddAttrParams): string => {
   const [expressions, nameVal, type = 'name'] = params;
 
   let { counter = 0 } = expressions;

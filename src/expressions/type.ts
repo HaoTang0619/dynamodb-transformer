@@ -1,4 +1,4 @@
-import { Marshalled } from '../type';
+import { BSet, Marshalled, NSet, SSet, Unmarshalled } from '../type';
 
 export type Expressions = {
   ConditionExpression?: string;
@@ -10,11 +10,17 @@ export type Expressions = {
   KeyConditionExpression?: string;
   ProjectionExpression?: string;
   UpdateExpression?: string;
+  updated?: {
+    set?: string[];
+    remove?: string[];
+    add?: string[];
+    delete?: string[];
+  }; // Would be omitted when returned.
 };
 
 export type AddAttrParams =
   | [Expressions, string]
-  | [Expressions, Uint8Array | boolean | number | null | string, 'value'];
+  | [Expressions, Unmarshalled, 'value'];
 
 export type NonEmptyArr<T> = [T, ...T[]];
 
@@ -70,6 +76,22 @@ export type OperateParams =
 
 export type OperateResult = (expressions: Expressions, name: string) => string;
 
+// [expressions, updater, name, value]
+export type UpdateFuncParams =
+  | [Expressions, 'set', string, Unmarshalled]
+  | [Expressions, 'remove', string]
+  | [Expressions, 'add', string, number | BSet | NSet | SSet]
+  | [Expressions, 'delete', string, BSet | NSet | SSet];
+
+// [updater, value]
+export type UpdateParams =
+  | ['set', Unmarshalled]
+  | ['remove']
+  | ['add', number | BSet | NSet | SSet]
+  | ['delete', BSet | NSet | SSet];
+
+export type UpdateResult = (expressions: Expressions, name: string) => void;
+
 type PlainValues =
   | Uint8Array
   | boolean
@@ -92,11 +114,17 @@ export type LogicalParams =
   | ['and' | 'or', NonEmptyArr<PlainData>]
   | ['not', PlainData];
 
+type UpdateValues = Unmarshalled | UpdateResult;
+
+export type UpdateData = {
+  [name: string]: UpdateValues;
+};
+
 export type DataSetToExpressionsParams = {
   condition?: PlainData;
   extraReservedWords?: string[];
   filter?: PlainData;
   keyCondition?: PlainData;
   projection?: string[];
-  update?: PlainData;
+  update?: UpdateData;
 };

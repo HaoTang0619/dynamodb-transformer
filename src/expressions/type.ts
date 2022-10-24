@@ -36,9 +36,11 @@ export const SYMBOL_NOT: unique symbol = Symbol.for('NOT');
 
 export type PlainData =
   | { [name: string]: PlainValues }
-  | [typeof SYMBOL_AND, NonEmptyArr<PlainData>]
-  | [typeof SYMBOL_OR, NonEmptyArr<PlainData>]
+  | [typeof SYMBOL_AND, PlainDataArr]
+  | [typeof SYMBOL_OR, PlainDataArr]
   | [typeof SYMBOL_NOT, PlainData];
+
+export type PlainDataArr = NonEmptyArr<PlainData>;
 
 type UpdateValues = Unmarshalled | UpdateResult;
 
@@ -54,3 +56,8 @@ export type DataSetToExpressionsParams = {
   projection?: string[];
   update?: UpdateData;
 };
+
+export type DataSetToExpressionsResult = Omit<
+  Expressions,
+  'counter' | 'extraReservedWords' | 'updated'
+>;

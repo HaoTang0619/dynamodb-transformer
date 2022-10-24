@@ -1,5 +1,3 @@
-import { NonEmptyArr, PlainData } from './type';
+import { PlainData, PlainDataArr } from './type';
 
-export type LogicalParams =
-  | ['and' | 'or', NonEmptyArr<PlainData>]
-  | ['not', PlainData];
+export type LogicalParams = ['and' | 'or', PlainDataArr] | ['not', PlainData];

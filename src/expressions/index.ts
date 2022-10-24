@@ -2,9 +2,10 @@ import { Unmarshalled } from '../type';
 import operate from './operate';
 import {
   DataSetToExpressionsParams,
+  DataSetToExpressionsResult,
   Expressions,
-  NonEmptyArr,
   PlainData,
+  PlainDataArr,
   UpdateData,
 } from './type';
 import update from './update';
@@ -13,12 +14,12 @@ import { addNameAttr } from './utils';
 const getExpressions = (expressions: Expressions, data: PlainData): string => {
   if (Array.isArray(data)) {
     if (data[0].description === 'AND') {
-      return (data[1] as NonEmptyArr<PlainData>)
+      return (data[1] as PlainDataArr)
         .map((d) => `(${getExpressions(expressions, d)})`)
         .join(' AND ');
     }
     if (data[0].description === 'OR') {
-      return (data[1] as NonEmptyArr<PlainData>)
+      return (data[1] as PlainDataArr)
         .map((d) => `(${getExpressions(expressions, d)})`)
         .join(' OR ');
     }
@@ -63,7 +64,7 @@ const getUpdateExpression = (
 
 const dataSetToExpressions = (
   dataSet: DataSetToExpressionsParams,
-): Omit<Expressions, 'counter' | 'extraReservedWords' | 'updated'> => {
+): DataSetToExpressionsResult => {
   const { extraReservedWords = [] } = dataSet;
 
   const expressions: Expressions = {

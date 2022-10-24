@@ -1,10 +1,11 @@
-import { addAttr, addNameAttr } from './operate';
+import { BSet, NSet, SSet, Unmarshalled } from '../type';
 import {
   Expressions,
   UpdateFuncParams,
   UpdateParams,
   UpdateResult,
 } from './type';
+import { addAttr, addNameAttr } from './utils';
 
 const appendUpdated = (
   expression: Expressions,
@@ -45,3 +46,7 @@ const update = (...params: UpdateParams): UpdateResult => {
 };
 
 export default update;
+export const SET = (value: Unmarshalled) => update('set', value);
+export const REMOVE = () => update('remove');
+export const ADD = (value: number | BSet | NSet | SSet) => update('add', value);
+export const DELETE = (value: BSet | NSet | SSet) => update('delete', value);

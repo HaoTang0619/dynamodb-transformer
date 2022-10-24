@@ -1,6 +1,6 @@
 import { NSet, SSet } from '../../type';
 import { Expressions } from '../type';
-import update, { LIST_APPEND, PATH } from '../update';
+import update, { LIST_APPEND, PATH } from '../update/index';
 
 const expressions: Expressions = {
   counter: 0,

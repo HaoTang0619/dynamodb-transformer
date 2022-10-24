@@ -1,7 +1,7 @@
 import dataSetToExpressions from '../index';
-import { AND, OR } from '../logical';
-import { ATTRIBUTE_EXISTS, NE } from '../operate';
-import { ADD, PATH } from '../update';
+import { AND, OR } from '../logical/index';
+import { ATTRIBUTE_EXISTS, NE } from '../operate/index';
+import { ADD, PATH } from '../update/index';
 
 test('dataSet1', () => {
   const result = dataSetToExpressions({

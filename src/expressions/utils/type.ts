@@ -1,5 +1,5 @@
-import { Unmarshalled } from '../type';
-import { Expressions } from './type';
+import { Unmarshalled } from '../../type';
+import { Expressions } from '../type';
 
 export type AddAttrParams =
   | [Expressions, string]

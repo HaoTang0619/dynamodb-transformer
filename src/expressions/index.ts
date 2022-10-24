@@ -1,5 +1,5 @@
 import { Unmarshalled } from '../type';
-import operate from './operate';
+import operate from './operate/index';
 import {
   DataSetToExpressionsParams,
   DataSetToExpressionsResult,
@@ -9,8 +9,8 @@ import {
   PlainValues,
   UpdateData,
 } from './type';
-import update from './update';
-import { addNameAttr } from './utils';
+import update from './update/index';
+import { addNameAttr } from './utils/index';
 
 const getExpressions = (expressions: Expressions, data: PlainData): string => {
   if (Array.isArray(data)) {

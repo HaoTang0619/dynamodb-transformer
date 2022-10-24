@@ -1,4 +1,4 @@
-import operate from '../operate';
+import operate from '../operate/index';
 import { Expressions } from '../type';
 
 const expressions: Expressions = {

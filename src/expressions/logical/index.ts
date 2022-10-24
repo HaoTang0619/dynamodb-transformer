@@ -1,11 +1,11 @@
-import { LogicalParams } from './logical.type';
 import {
   PlainData,
   PlainDataArr,
   SYMBOL_AND,
   SYMBOL_NOT,
   SYMBOL_OR,
-} from './type';
+} from '../type';
+import { LogicalParams } from './type';
 
 const logical = (...params: LogicalParams): PlainData => {
   const [operator, data] = params;

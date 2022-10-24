@@ -1,5 +1,5 @@
-import { BSet, NSet, SSet, Unmarshalled } from '../type';
-import { Expressions } from './type';
+import { BSet, NSet, SSet, Unmarshalled } from '../../type';
+import { Expressions } from '../type';
 
 export const SYMBOL_IF_NOT_EXISTS: unique symbol = Symbol.for('if_not_exists');
 export const SYMBOL_LIST_APPEND: unique symbol = Symbol.for('list_append');

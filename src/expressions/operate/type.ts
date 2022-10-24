@@ -1,4 +1,4 @@
-import { Expressions, PlainValues, PlainValuesArr } from './type';
+import { Expressions, PlainValues, PlainValuesArr } from '../type';
 
 // [expressions, operator, name, value]
 export type OperateFuncParams =

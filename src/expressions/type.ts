@@ -1,6 +1,6 @@
 import { Marshalled } from '../type';
-import { OperateResult } from './operate.type';
-import { SetParams, UpdateResult } from './update.type';
+import { OperateResult } from './operate/type';
+import { SetParams, UpdateResult } from './update/type';
 
 export type Expressions = {
   ConditionExpression?: string;

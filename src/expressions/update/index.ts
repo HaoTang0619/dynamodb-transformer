@@ -1,5 +1,6 @@
-import { BSet, NSet, SSet, Unmarshalled } from '../type';
-import { Expressions } from './type';
+import { BSet, NSet, SSet, Unmarshalled } from '../../type';
+import { Expressions } from '../type';
+import { addAttr, addNameAttr } from '../utils/index';
 import {
   SetFuncParams,
   SetFuncResult,
@@ -10,8 +11,7 @@ import {
   UpdateFuncParams,
   UpdateParams,
   UpdateResult,
-} from './update.type';
-import { addAttr, addNameAttr } from './utils';
+} from './type';
 
 const appendUpdated = (
   expression: Expressions,

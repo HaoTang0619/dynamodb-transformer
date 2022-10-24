@@ -1,4 +1,4 @@
-import operate from './operate';
+import operate, { addNameAttr } from './operate';
 import {
   DataSetToExpressionsParams,
   Expressions,
@@ -64,6 +64,12 @@ const dataSetToExpressions = (
       expressions,
       dataSet.keyCondition,
     );
+  }
+
+  if (!!dataSet.projection) {
+    expressions.ProjectionExpression = dataSet.projection
+      .map((proj) => addNameAttr(expressions, proj))
+      .join(', ');
   }
 
   if (!!dataSet.update) {

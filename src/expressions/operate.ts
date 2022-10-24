@@ -59,7 +59,7 @@ const addNameAttrOfEach = (
   return newName;
 };
 
-const addNameAttr = (expressions: Expressions, name: string): string => {
+export const addNameAttr = (expressions: Expressions, name: string): string => {
   // Step 1 ~ replace "extraReservedWords":
   const { extraReservedWords = [] } = expressions;
   let newName = name;

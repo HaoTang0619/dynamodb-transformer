@@ -97,5 +97,6 @@ export type DataSetToExpressionsParams = {
   extraReservedWords?: string[];
   filter?: PlainData;
   keyCondition?: PlainData;
+  projection?: string[];
   update?: PlainData;
 };

@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-transformer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plenty of handy functions that help you deal with DynamoDB schema & expressions easily.",
   "main": "lib/main/index.js",
   "types": "lib/main/index.d.ts",

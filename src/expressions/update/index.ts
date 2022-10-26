@@ -33,8 +33,10 @@ const setFunc = (...params: SetFuncParams): SetFuncResult => {
 };
 export const IF_NOT_EXISTS = (name1: string, value: Unmarshalled) =>
   setFunc('if_not_exists', name1, value);
-export const LIST_APPEND = (name1: string, value: Unmarshalled[]) =>
-  setFunc('list_append', name1, value);
+export const LIST_APPEND = (
+  name1: string,
+  value: [Unmarshalled, ...Unmarshalled[]],
+) => setFunc('list_append', name1, value);
 export const PATH = (name1: string) => setFunc('path', name1);
 
 const updateFunc = (...params: UpdateFuncParams): void => {
@@ -52,7 +54,7 @@ const updateFunc = (...params: UpdateFuncParams): void => {
         const name1Attr = addNameAttr(expressions, value[1] as string);
         valueAttr = addAttr(
           expressions,
-          value[2] as Unmarshalled | Unmarshalled[],
+          value[2] as Unmarshalled | [Unmarshalled, ...Unmarshalled[]],
           'value',
         );
 

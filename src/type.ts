@@ -11,7 +11,7 @@ type MapToUnmarshlled<T> = T extends Marshalled
   ? UnmarshalerOfEachResult<T>
   : never;
 
-type MapParamList<F, T> = F extends 'marshalled'
+type MapParamList<F, T> = F extends 'to_marshalled'
   ? MapToMarshlled<T>
   : MapToUnmarshlled<T>;
 

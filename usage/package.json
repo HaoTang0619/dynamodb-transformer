@@ -4,6 +4,7 @@
     "use": "ts-node index.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.196.0",
     "dynamodb-transformer": "file:.yalc/dynamodb-transformer"
   },
   "devDependencies": {

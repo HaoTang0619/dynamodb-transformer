@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "dynamodb-transformer": {
-      "signature": "3256ec0f8995caf9ca5080d71d370790",
+      "signature": "7e94e2c3cd5ff7658acf7ba7e950d668",
       "file": true
     }
   }

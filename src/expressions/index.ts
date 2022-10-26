@@ -119,11 +119,11 @@ const dataSetToExpressions = (
 export default dataSetToExpressions;
 
 export {
-  PlainValues,
-  PlainValuesArr,
-  PlainData,
-  PlainDataArr,
-  UpdateData,
   DataSetToExpressionsParams,
   DataSetToExpressionsResult,
+  PlainData,
+  PlainDataArr,
+  PlainValues,
+  PlainValuesArr,
+  UpdateData,
 } from './type';

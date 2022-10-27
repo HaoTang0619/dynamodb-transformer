@@ -13,6 +13,9 @@
 
 ## Documentation
 
+> To import from **subpaths** successfully, you might have to set `[tsconfig.json].compilerOptions.moduleResolution` to `"Node16"` or `"NodeNext"`.
+> Otherwize, import functions from `lib/module` (esm) or `lib/main` (cjs).
+
 ### `marshler` & `unmarshler`
 
 Import `marshler` & `unmarshler` from the root directory:

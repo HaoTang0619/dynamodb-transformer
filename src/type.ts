@@ -76,7 +76,7 @@ export type MarshalerOfEachResult<T extends Unmarshalled> = T extends Uint8Array
   ? { S: string }
   : T extends SSet
   ? { SS: string[] }
-  : never;
+  : unknown;
 
 export type MarshalerParams = { [name: string]: Unmarshalled };
 
@@ -126,7 +126,7 @@ export type UnmarshalerOfEachResult<T extends Marshalled> = keyof T extends 'B'
   ? string
   : keyof T extends 'SS'
   ? SSet
-  : never;
+  : unknown;
 
 export type UnmarshalerParams = { [name: string]: Marshalled } | undefined;
 

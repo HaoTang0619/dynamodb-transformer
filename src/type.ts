@@ -2,7 +2,7 @@ export class BSet extends Set<Uint8Array> {}
 export class NSet extends Set<number> {}
 export class SSet extends Set<string> {}
 
-// Utils
+// Utils (Array mapping)
 type MapToMarshlled<T> = T extends Unmarshalled
   ? MarshalerOfEachResult<T>
   : never;
@@ -27,12 +27,20 @@ type Mapped<
   ? Mapped<[...Tail], F, [...Result, MapParamList<F, Head>]>
   : Result;
 
+// Utils (Union)
+type UnionKeys<T> = T extends T ? keyof T : never;
+type StrictUnionHelper<T, TAll> = T extends any
+  ? T & Partial<Record<Exclude<UnionKeys<TAll>, keyof T>, never>>
+  : never;
+type StrictUnion<T> = StrictUnionHelper<T, T>;
+
 // For marshaler:
 export type Unmarshalled =
   | Uint8Array // B
   | boolean // BOOL
   | BSet // BS
-  | [Unmarshalled, ...Unmarshalled[]] // L (tuple type)
+  | [Unmarshalled, ...Unmarshalled[]] // L (tuple is for mapping exact types by Mapped)
+  | Unmarshalled[] // L (if not tuple => return an array type)
   | { [name: string]: Unmarshalled } // M
   | number // N
   | NSet // NS
@@ -48,6 +56,14 @@ export type MarshalerOfEachResult<T extends Unmarshalled> = T extends Uint8Array
   ? { BS: Uint8Array[] }
   : T extends [Unmarshalled, ...Unmarshalled[]]
   ? { L: Mapped<T, 'to_marshalled'> }
+  : T extends Unmarshalled[]
+  ? {
+      L: {
+        [P in keyof T]: T[P] extends Unmarshalled
+          ? MarshalerOfEachResult<T[P]>
+          : never;
+      };
+    }
   : T extends { [name: string]: Unmarshalled }
   ? { M: MarshalerResult<T> }
   : T extends number
@@ -55,39 +71,33 @@ export type MarshalerOfEachResult<T extends Unmarshalled> = T extends Uint8Array
   : T extends NSet
   ? { NS: string[] }
   : T extends null
-  ? { NULL: true }
+  ? { NULL: boolean }
   : T extends string
   ? { S: string }
   : T extends SSet
   ? { SS: string[] }
   : never;
 
-export type MarshalerParams = {
-  [name: string]: Unmarshalled;
-};
+export type MarshalerParams = { [name: string]: Unmarshalled };
 
 export type MarshalerResult<T extends MarshalerParams> = {
   [P in keyof T]: MarshalerOfEachResult<T[P]>;
 };
 
 // For Unmarshaler:
-type UnionKeys<T> = T extends T ? keyof T : never;
-type StrictUnionHelper<T, TAll> = T extends any
-  ? T & Partial<Record<Exclude<UnionKeys<TAll>, keyof T>, never>>
-  : never;
-type StrictUnion<T> = StrictUnionHelper<T, T>;
-
 export type Marshalled = StrictUnion<
   | { B: Uint8Array }
   | { BOOL: boolean }
   | { BS: Uint8Array[] }
-  | { L: [Marshalled, ...Marshalled[]] } // (tuple type)
+  | { L: [Marshalled, ...Marshalled[]] } // L (tuple is for mapping exact types by Mapped)
+  | { L: Marshalled[] } // L (if not tuple => return an array type)
   | { M: { [name: string]: Marshalled } }
   | { N: string }
   | { NS: string[] }
-  | { NULL: true }
+  | { NULL: boolean }
   | { S: string }
   | { SS: string[] }
+  | { $unknown: [string, any] } // To match AWS SDK schema
 >;
 
 export type UnmarshalerOfEachResult<T extends Marshalled> = keyof T extends 'B'
@@ -99,6 +109,8 @@ export type UnmarshalerOfEachResult<T extends Marshalled> = keyof T extends 'B'
   : keyof T extends 'L'
   ? T['L'] extends [Marshalled, ...Marshalled[]]
     ? Mapped<T['L'], 'to_unmarshalled'>
+    : T['L'] extends Marshalled[]
+    ? Unmarshalled[]
     : never
   : keyof T extends 'M'
   ? T['M'] extends { [name: string]: Marshalled }
@@ -116,10 +128,10 @@ export type UnmarshalerOfEachResult<T extends Marshalled> = keyof T extends 'B'
   ? SSet
   : never;
 
-export type UnmarshalerParams = {
-  [name: string]: Marshalled;
-};
+export type UnmarshalerParams = { [name: string]: Marshalled } | undefined;
 
 export type UnmarshalerResult<T extends UnmarshalerParams> = {
-  [P in keyof T]: UnmarshalerOfEachResult<T[P]>;
+  [P in keyof T]: T[P] extends Marshalled
+    ? UnmarshalerOfEachResult<T[P]>
+    : never;
 };

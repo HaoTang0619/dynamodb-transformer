@@ -65,7 +65,7 @@ const unmarshalerOfEach = <T extends Marshalled>(
 const unmarshaler = <T extends UnmarshalerParams>(
   data: T,
 ): UnmarshalerResult<T> => {
-  return Object.entries(data).reduce(
+  return Object.entries(data || ({} as Marshalled)).reduce(
     (acc, [name, value]) => ({ ...acc, [name]: unmarshalerOfEach(value) }),
     {},
   ) as UnmarshalerResult<T>;

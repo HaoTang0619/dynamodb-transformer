@@ -22,7 +22,7 @@ const condition = { id: '', test: '' };
 const item = {
   id: '49111451611ff68dff8ccda24b43795d3f2747f99678db0b59424a7915a1d825',
   amount: 129000,
-  // list: [{ brand: 'amex', processor: { id: '123', name: 'stripe' } }],
+  list: [{ brand: 'amex', processor: { id: '123', name: 'stripe' } }],
   url: null,
 };
 

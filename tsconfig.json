@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "node",
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2019",
+    "target": "es2017",
     "sourceMap": true,
     "outDir": "./lib/main",
     "skipLibCheck": true,

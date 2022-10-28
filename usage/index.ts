@@ -10,8 +10,8 @@ import {
   UpdateItemCommand,
 } from '@aws-sdk/client-dynamodb';
 import { marshaler, unmarshaler } from 'dynamodb-transformer';
-import dataSetToExpressions from 'dynamodb-transformer/expressions';
-import { ATTRIBUTE_NOT_EXISTS, NE } from 'dynamodb-transformer/operate';
+import { dataSetToExpressions } from 'dynamodb-transformer';
+import { ATTRIBUTE_NOT_EXISTS, NE } from 'dynamodb-transformer';
 
 const dynamoDB = new DynamoDBClient({});
 

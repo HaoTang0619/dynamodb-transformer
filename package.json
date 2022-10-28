@@ -6,28 +6,6 @@
   "types": "lib/main/index.d.ts",
   "module": "lib/module/index.js",
   "private": false,
-  "exports": {
-    ".": {
-      "import": "./lib/module/index.js",
-      "require": "./lib/main/index.js"
-    },
-    "./expressions": {
-      "import": "./lib/module/expressions/index.js",
-      "require": "./lib/main/expressions/index.js"
-    },
-    "./logical": {
-      "import": "./lib/module/expressions/logical/index.js",
-      "require": "./lib/main/expressions/logical/index.js"
-    },
-    "./operate": {
-      "import": "./lib/module/expressions/operate/index.js",
-      "require": "./lib/main/expressions/operate/index.js"
-    },
-    "./update": {
-      "import": "./lib/module/expressions/update/index.js",
-      "require": "./lib/main/expressions/update/index.js"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/HaoTang0619/dynamodb-transformer.git"

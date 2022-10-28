@@ -13,12 +13,7 @@
 
 ## Documentation
 
-> To import from **subpaths** successfully, you might have to set `[tsconfig.json].compilerOptions.moduleResolution` to `"Node16"` or `"NodeNext"`.
-> Otherwize, import functions from `lib/module` (esm) or `lib/main` (cjs).
-
 ### `marshler` & `unmarshler`
-
-Import `marshler` & `unmarshler` from the root directory:
 
 ```typescript
 import { marshaler, unmarshaler } from 'dynamodb-transformer';
@@ -97,10 +92,8 @@ import { BSet, NSet, SSet } from 'dynamodb-transformer';
 
 ### `dataSetToExpressions`
 
-Import `dataSetToExpressions` from the `/expressions` directory:
-
 ```typescript
-import dataSetToExpressions from 'dynamodb-transformer/expressions';
+import { dataSetToExpressions } from 'dynamodb-transformer';
 ```
 
 - Input schema:
@@ -128,7 +121,7 @@ import dataSetToExpressions from 'dynamodb-transformer/expressions';
   ```
 - `condition`, `filter` & `keyCondition`:
 
-  - Several functions are available from `dynamodb-transformer/operate` as follow:
+  - Several functions are available from `dynamodb-transformer` as follow:
     - `EQ`(`=`), `NE`(`<>`), `LE`(`<=`), `LT`(`<`), `GE`(`>=`), `GT`(`>`),
     - `BETWEEN`, `IN`,
     - `ATTRIBUTE_EXISTS`, `ATTRIBUTE_NOT_EXISTS`, `ATTRIBUTE_TYPE`, `BEGINS_WITH`, `CONTAINS`, `SIZE`
@@ -138,8 +131,11 @@ import dataSetToExpressions from 'dynamodb-transformer/expressions';
   - Example:
 
     ```typescript
-    import dataSetToExpressions from 'dynamodb-transformer/expressions';
-    import { ATTRIBUTE_EXISTS, GE } from 'dynamodb-transformer/operate';
+    import {
+      dataSetToExpressions,
+      ATTRIBUTE_EXISTS,
+      GE,
+    } from 'dynamodb-transformer';
 
     console.log(
       dataSetToExpressions({
@@ -155,7 +151,7 @@ import dataSetToExpressions from 'dynamodb-transformer/expressions';
     // }
     ```
 
-  - **Logical** functions are available from `dynamodb-transformer/logical` as follow:
+  - **Logical** functions are available from `dynamodb-transformer` as follow:
     - `AND`, `OR`, `NOT`
   - `AND` & `OR` accept **an array of objects**, and join each element with the logical operator.
   - Each element would be **enclosed by parentheses** before joined.
@@ -163,9 +159,13 @@ import dataSetToExpressions from 'dynamodb-transformer/expressions';
   - Example:
 
     ```typescript
-    import dataSetToExpressions from 'dynamodb-transformer/expressions';
-    import { ATTRIBUTE_EXISTS, NE } from 'dynamodb-transformer/operate';
-    import { NOT, OR } from 'dynamodb-transformer/operate/logical';
+    import {
+      dataSetToExpressions,
+      ATTRIBUTE_EXISTS,
+      NE,
+      NOT,
+      OR,
+    } from 'dynamodb-transformer';
 
     console.log(
       dataSetToExpressions({
@@ -193,7 +193,7 @@ import dataSetToExpressions from 'dynamodb-transformer/expressions';
   - `['uuid.abc', 'def.name[0]', 'ghi']` => `ProjectionExpression: '#n_0.abc, def.#n_1[0], ghi'`
 - `update`:
 
-  - 4 functions are available from `dynamodb-transformer/update` as follow:
+  - 4 functions are available from `dynamodb-transformer` as follow:
     - `SET`, `REMOVE`, `ADD`, `DELETE`
   - `SET` can be omitted by passing the value directly.
   - 3 other functions are available for special expressions of `SET`:
@@ -201,8 +201,12 @@ import dataSetToExpressions from 'dynamodb-transformer/expressions';
   - Example:
 
     ```typescript
-    import dataSetToExpressions from 'dynamodb-transformer/expressions';
-    import { ADD, IF_NOT_EXISTS, PATH } from 'dynamodb-transformer/update';
+    import {
+      dataSetToExpressions,
+      ADD,
+      IF_NOT_EXISTS,
+      PATH,
+    } from 'dynamodb-transformer';
 
     console.log(
       dataSetToExpressions({
